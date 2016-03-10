@@ -70,7 +70,7 @@ var game = {
         $flipContainer.append($flipper);
 
         $flipper.append($back);
-        var $backImg = $("<img>").attr("src", shuffledImages[k-1]);
+        var $backImg = $("<img>").attr("src", shuffledImages[k-1]).addClass('inactive');
         $back.append($backImg);
 
         $flipper.append($front);
@@ -91,19 +91,26 @@ var game = {
     this.frontImages[img] = player;
   },
 
-  checkIfPair : function () {
+  checkIfPair : function ( el ) {
     if (this.compareImages.length === 2) {
       if (this.compareImages[0] === this.compareImages[1]) {
         console.log("pair");
         this.playerscore++;
+
+        // find all of the images with those two urls, and set their parent flip-container to have the class active
+        var correctImages = $(".flip-container.flip").find("img[src='" + game.compareImages[0] + "']");
+        for (var i = 0; i < correctImages.length; i++) {
+          var $currentImage = correctImages.eq(i);
+          $currentImage.removeClass('inactive');
+          $currentImage.parent().parent().parent().addClass("active");
+        }
+
         this.compareImages = [];
+        this.winner();
       } else {
         var flippedImgs = $(".flip")
-        for (flippedImg in flippedImgs) {
-          if (flippedImg === )
-        }
         console.log("not a pair");
-        $(".flip").removeClass("flip");
+        $(".flip:not(.active)").removeClass("flip");
         this.compareImages = [];
       }
 
@@ -140,7 +147,7 @@ $(document).ready(function () {
     var imageName = $(this).find('img').attr("src");
     console.log(imageName);
     game.compareImages.push( imageName );
-    game.checkIfPair();
+    game.checkIfPair( $(this) );
     // game.winner(); THIS NEEDS WORK
   })
 });
