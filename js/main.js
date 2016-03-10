@@ -56,12 +56,9 @@ var game = {
     }
     var shuffledImages = this.shuffle( this.imgForGame );
     for (var j = 1; j <= rows; j++) {
-      // shuffle images
       shuffledImages = this.shuffle(shuffledImages);
-      // create row
       var $row = $("<div>").addClass("rows" + j);
       $('.container').append($row);
-      // create columns
       for (var k = 1; k <= columns; k++) {
 
         var $flipContainer = $("<div>").addClass('box').addClass("flip-container");
@@ -93,25 +90,6 @@ var game = {
   playerMove : function (img, player) {
     this.frontImages[img] = player;
   },
-
-  // // attempt
-  // playerTurn : function() {
-  //   var cardSelection = 0;
-  //   var totalPlayerTurns = 0
-  //   if (cardSelection === 2) {
-  //     totalPlayerTurns++;
-  //     cardSelection = 0;
-  //
-  //     //on click cardSelection++
-  //   };
-  //   if (totalPlayerTurns % 2 !== 0) {
-  //     return player1 = player;
-  //     console.log("player1")
-  //   } else {
-  //     return player2 = player;
-  //     console.log("player2")
-  //   }
-  // },
 
   checkIfPair : function () {
     if (this.compareImages.length === 2) {
@@ -159,13 +137,30 @@ $(document).ready(function () {
 $(document).ready(function () {
   $(".flip-container").on("click", function () {
     this.classList.toggle("flip");
-
-    // delay
     var imageName = $(this).find('img').attr("src");
     console.log(imageName);
     game.compareImages.push( imageName );
-
     game.checkIfPair();
     // game.winner(); THIS NEEDS WORK
   })
 });
+
+
+// // attempt
+// playerTurn : function() {
+//   var cardSelection = 0;
+//   var totalPlayerTurns = 0
+//   if (cardSelection === 2) {
+//     totalPlayerTurns++;
+//     cardSelection = 0;
+//
+//     //on click cardSelection++
+//   };
+//   if (totalPlayerTurns % 2 !== 0) {
+//     return player1 = player;
+//     console.log("player1")
+//   } else {
+//     return player2 = player;
+//     console.log("player2")
+//   }
+// },
